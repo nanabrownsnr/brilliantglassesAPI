@@ -371,4 +371,4 @@ if __name__ == "__main__":
     # Run server
     if options.server:
         import uvicorn
-        uvicorn.run(app, host="0.0.0.0", port=int(EXPERIMENT_AI_PORT))
+        uvicorn.run(app, host="0.0.0.0", port = int(os.environ.get('PORT', 10000)))
