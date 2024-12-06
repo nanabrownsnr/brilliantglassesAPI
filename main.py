@@ -372,11 +372,4 @@ if __name__ == "__main__":
 
     # Run server
     if options.server:
-
-        port = int(os.environ.get('PORT', 80000))
-        uvicorn.run(
-            "main:app",  # Replace "main" with the module name where your app is defined
-            host="0.0.0.0",
-            port=port,  # Replace port with your desired port number
-            reload=True  # Optional: Enables automatic reloading on file changes
-        )
+        uvicorn.run("main:app"host="0.0.0.0",port=PORT)
