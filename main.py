@@ -44,18 +44,33 @@ ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", None)
 
 app = FastAPI()
 
-class Checker:
-    def __init__(self, model: BaseModel):
-        self.model = model
+# class Checker:
+#     def __init__(self, model: BaseModel):
+#         self.model = model
 
-    def __call__(self, data: str = Form(...)):
-        try:
-            return self.model.model_validate_json(data)
-        except ValidationError as e:
-            raise HTTPException(
-                detail=jsonable_encoder(e.errors()),
-                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            )
+#     def __call__(self, data: str = Form(...)):
+#         try:
+#             return self.model.model_validate_json(data)
+#         except ValidationError as e:
+#             raise HTTPException(
+#                 detail=jsonable_encoder(e.errors()),
+#                 status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+#             )
+
+class Checker:
+  def __init__(self, model: BaseModel):
+    self.model = model
+
+  def __call__(self, data: str = Form(...)):
+    try:
+      # Assuming your data is wrapped in JSON.stringify
+      data = json.loads(data)  # Parse the string as JSON
+      return self.model.model_validate_json(data)
+    except (json.JSONDecodeError, ValidationError) as e:
+      raise HTTPException(
+          detail=jsonable_encoder(e.errors()),
+          status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+      )
 
 async def transcribe(client: openai.AsyncOpenAI, audio_bytes: bytes) -> str:
     # Create a file-like object for Whisper API to consume
