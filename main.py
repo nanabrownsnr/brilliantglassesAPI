@@ -34,8 +34,6 @@ import uvicorn
 # Configuration
 ####################################################################################################
 
-EXPERIMENT_AI_PORT = os.environ.get('EXPERIMENT_AI_PORT',8000)
-PORT = int(os.environ.get('PORT', 95000))
 PERPLEXITY_API_KEY = os.environ.get("PERPLEXITY_API_KEY", None)
 ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", None)
 
@@ -372,4 +370,11 @@ if __name__ == "__main__":
 
     # Run server
     if options.server:
-        uvicorn.run("main:app",host="0.0.0.0",port=PORT)
+        port = int(os.environ.get('PORT', 10000))
+
+        uvicorn.run(
+            "main:app",  # Replace "main" with the module name where your app is defined
+            host="0.0.0.0",
+            port=port,  # Replace port with your desired port number
+            reload=True  # Optional: Enables automatic reloading on file changes
+        )
