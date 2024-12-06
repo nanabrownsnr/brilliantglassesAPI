@@ -372,4 +372,4 @@ if __name__ == "__main__":
 
     # Run server
     if options.server:
-        uvicorn.run("main:app"host="0.0.0.0",port=PORT)
+        uvicorn.run("main:app",host="0.0.0.0",port=PORT)
