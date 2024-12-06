@@ -35,6 +35,7 @@ import uvicorn
 ####################################################################################################
 
 EXPERIMENT_AI_PORT = os.environ.get('EXPERIMENT_AI_PORT',8000)
+PORT = int(os.environ.get('PORT', 95000))
 PERPLEXITY_API_KEY = os.environ.get("PERPLEXITY_API_KEY", None)
 ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", None)
 
