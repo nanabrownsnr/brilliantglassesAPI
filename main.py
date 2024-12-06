@@ -27,6 +27,7 @@ from vision import Vision, GPT4Vision, ClaudeVision
 from vision.utils import process_image
 from generate_image import ReplicateGenerateImage
 from assistant import Assistant, AssistantResponse, GPTAssistant, ClaudeAssistant, extract_learned_context
+import uvicorn
 
 
 ####################################################################################################
@@ -370,5 +371,9 @@ if __name__ == "__main__":
 
     # Run server
     if options.server:
-        import uvicorn
-        uvicorn.run(app, host="0.0.0.0", port = int(os.environ.get('PORT', 10000)))
+        uvicorn.run(
+            "main:app",  # Replace "main" with the module name where your app is defined
+            host="0.0.0.0",
+            port=port,  # Replace port with your desired port number
+            reload=True  # Optional: Enables automatic reloading on file changes
+        )
