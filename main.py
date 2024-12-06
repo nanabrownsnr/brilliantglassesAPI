@@ -351,22 +351,22 @@ if __name__ == "__main__":
             image_bytes = fp.read()
 
     # Test query
-# if options.query:
-    async def run_query() -> str:
-        return await app.state.assistant.send_to_assistant(
-            prompt=options.query,
-            image_bytes=image_bytes,
-            message_history=[],
-            learned_context={},
-            local_time=datetime.now().strftime("%A, %B %d, %Y, %I:%M %p"),  # e.g., Friday, March 8, 2024, 11:54 AM
-            location_address=options.location,
-            model=None,
-            web_search=app.state.web_search,
-            vision=app.state.vision,
-
-        )
-    response = asyncio.run(run_query())
-    print(response)
+    if options.query:
+        async def run_query() -> str:
+            return await app.state.assistant.send_to_assistant(
+                prompt=options.query,
+                image_bytes=image_bytes,
+                message_history=[],
+                learned_context={},
+                local_time=datetime.now().strftime("%A, %B %d, %Y, %I:%M %p"),  # e.g., Friday, March 8, 2024, 11:54 AM
+                location_address=options.location,
+                model=None,
+                web_search=app.state.web_search,
+                vision=app.state.vision,
+        
+            )
+        response = asyncio.run(run_query())
+        print(response)
 
     # Run server
 # if options.server:
