@@ -371,6 +371,8 @@ if __name__ == "__main__":
 
     # Run server
     if options.server:
+
+        port = int(os.environ.get('PORT', 80000))
         uvicorn.run(
             "main:app",  # Replace "main" with the module name where your app is defined
             host="0.0.0.0",
