@@ -164,6 +164,8 @@ async def api_mm(request: Request, mm: Annotated[str, Form()], audio : UploadFil
     try:
         # mm: MultimodalRequest = Checker(MultimodalRequest)(data=mm)
         print(mm)
+        mm = MultimodalRequest(**mm)
+        print(mm)
 
         # Transcribe voice prompt if it exists
         voice_prompt = ""
