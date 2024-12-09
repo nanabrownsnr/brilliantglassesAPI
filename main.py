@@ -162,9 +162,8 @@ def get_next_filename():
 @app.post("/mm")
 async def api_mm(request: Request, mm: Annotated[str, Form()], audio : UploadFile = None, image: UploadFile = None):
     try:
-        # mm: MultimodalRequest = Checker(MultimodalRequest)(data=mm)
-        print(mm)
-        mm = MultimodalRequest(**mm)
+        mm: MultimodalRequest = Checker(MultimodalRequest)(data=mm)
+
         print(mm)
 
         # Transcribe voice prompt if it exists
