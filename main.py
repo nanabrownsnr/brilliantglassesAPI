@@ -116,17 +116,38 @@ def get_assistant(app, mm: MultimodalRequest) -> Tuple[Assistant, str | None]:
     # Should never fall through to here
     return None, ""
 
+# def get_web_search_provider(app, mm: MultimodalRequest) -> WebSearch:
+#     # Use provider specified in request options
+#     if mm.search_api == SearchAPI.SERP:
+#         return SerpWebSearch(save_to_file=options.save, engine=mm.search_engine.value, max_search_results=mm.max_search_results)
+#     elif mm.search_api == SearchAPI.DATAFORSEO:
+#         return DataForSEOWebSearch(save_to_file=options.save, max_search_results=mm.max_search_results)
+#     elif mm.search_api == SearchAPI.PERPLEXITY:
+#         if mm.perplexity_key and len(mm.perplexity_key) > 0:
+#             return PerplexityWebSearch(api_key=mm.perplexity_key)
+#         return PerplexityWebSearch(api_key=PERPLEXITY_API_KEY)
+
+#     # Default provider
+#     return app.state.web_search
+
 def get_web_search_provider(app, mm: MultimodalRequest) -> WebSearch:
     # Use provider specified in request options
     if mm.search_api == SearchAPI.SERP:
-        return SerpWebSearch(save_to_file=options.save, engine=mm.search_engine.value, max_search_results=mm.max_search_results)
+        return SerpWebSearch(
+            save_to_file=None,  # Remove options.save dependency
+            engine=mm.search_engine.value,
+            max_search_results=mm.max_search_results
+        )
     elif mm.search_api == SearchAPI.DATAFORSEO:
-        return DataForSEOWebSearch(save_to_file=options.save, max_search_results=mm.max_search_results)
+        return DataForSEOWebSearch(
+            save_to_file=None,  # Remove options.save dependency
+            max_search_results=mm.max_search_results
+        )
     elif mm.search_api == SearchAPI.PERPLEXITY:
         if mm.perplexity_key and len(mm.perplexity_key) > 0:
             return PerplexityWebSearch(api_key=mm.perplexity_key)
         return PerplexityWebSearch(api_key=PERPLEXITY_API_KEY)
-
+ 
     # Default provider
     return app.state.web_search
 
