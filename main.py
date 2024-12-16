@@ -130,36 +130,36 @@ def get_assistant(app, mm: MultimodalRequest) -> Tuple[Assistant, str | None]:
 #     # Default provider
 #     return app.state.web_search
 
-def get_web_search_provider(app, mm: MultimodalRequest) -> WebSearch:
-    # Use provider specified in request options
-    if mm.search_api == SearchAPI.SERP:
-        return SerpWebSearch(
-            save_to_file=None,  # Remove options.save dependency
-            engine=mm.search_engine.value,
-            max_search_results=mm.max_search_results
-        )
-    elif mm.search_api == SearchAPI.DATAFORSEO:
-        return DataForSEOWebSearch(
-            save_to_file=None,  # Remove options.save dependency
-            max_search_results=mm.max_search_results
-        )
-    elif mm.search_api == SearchAPI.PERPLEXITY:
-        if mm.perplexity_key and len(mm.perplexity_key) > 0:
-            return PerplexityWebSearch(api_key=mm.perplexity_key)
-        return PerplexityWebSearch(api_key=PERPLEXITY_API_KEY)
+# def get_web_search_provider(app, mm: MultimodalRequest) -> WebSearch:
+#     # Use provider specified in request options
+#     if mm.search_api == SearchAPI.SERP:
+#         return SerpWebSearch(
+#             save_to_file=None,  # Remove options.save dependency
+#             engine=mm.search_engine.value,
+#             max_search_results=mm.max_search_results
+#         )
+#     elif mm.search_api == SearchAPI.DATAFORSEO:
+#         return DataForSEOWebSearch(
+#             save_to_file=None,  # Remove options.save dependency
+#             max_search_results=mm.max_search_results
+#         )
+#     elif mm.search_api == SearchAPI.PERPLEXITY:
+#         if mm.perplexity_key and len(mm.perplexity_key) > 0:
+#             return PerplexityWebSearch(api_key=mm.perplexity_key)
+#         return PerplexityWebSearch(api_key=PERPLEXITY_API_KEY)
  
-    # Default provider
-    return app.state.web_search
+#     # Default provider
+#     return app.state.web_search
 
-def get_vision_provider(app, mm: MultimodalRequest) -> Vision | None:
-    # Use provider specified 
-    if mm.vision in [VisionModel.GPT4O, VisionModel.GPT4Vision ]:
-        return GPT4Vision(client=app.state.openai_client, model=mm.vision)
-    elif mm.vision in [VisionModel.CLAUDE_HAIKU, VisionModel.CLAUDE_SONNET, VisionModel.CLAUDE_OPUS]:
-        return ClaudeVision(client=app.state.anthropic_client, model=mm.vision)
+# def get_vision_provider(app, mm: MultimodalRequest) -> Vision | None:
+#     # Use provider specified 
+#     if mm.vision in [VisionModel.GPT4O, VisionModel.GPT4Vision ]:
+#         return GPT4Vision(client=app.state.openai_client, model=mm.vision)
+#     elif mm.vision in [VisionModel.CLAUDE_HAIKU, VisionModel.CLAUDE_SONNET, VisionModel.CLAUDE_OPUS]:
+#         return ClaudeVision(client=app.state.anthropic_client, model=mm.vision)
     
-    # Default provider
-    return app.state.vision
+#     # Default provider
+#     return app.state.vision
 
 @app.get('/health')
 async def api_health():
